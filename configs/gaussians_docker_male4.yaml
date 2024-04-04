@@ -1,0 +1,118 @@
+logdir: ./logs
+flush_log_secs: 120
+log_every_n_steps: 10
+val_check_interval: 1.0
+
+runner:
+  target: runners.train_gaussians.TextureAndGaussianTrainer
+  params:
+    gender: "male"
+    lr_texture: 0.01
+    color_lr: 0.005
+    position_lr: 0.00016
+    final_position_lr: 0.0000016
+    opacity_lr: 0.05
+    scaling_lr: 0.005
+    rotation_lr: 0.005
+    pose_lr: 0.0002
+
+    min_s_value: 0.0
+    max_s_value: 0.1
+
+    gaussians_optimize_steps: 3000
+    texture_optimize_steps: 2500
+    opacity_optimize_steps: 5000
+
+    densify_start: 100
+    densify_step: 201
+    densify_stop: 2500
+
+    prune_start: 0
+    prune_step: 201
+    prune_stop: 100000
+
+    render_size: 544
+    texture_size: 512
+    smplx_path: /mounted/home/dsvitov/Datasets/models_smplx_v1_1/models
+    use_pca_for_hands: True
+
+    criteria_config:
+      l2_loss:
+        target: criteria.l2_loss.L2Loss
+        params:
+          weight: 1.
+
+      perceptual_loss:
+        target: criteria.perceptual_loss.PerceptualLoss
+        params:
+          weight: 0.01
+
+      ssim_loss:
+        target: criteria.ssim_loss.SSIMLoss
+        params:
+          weight: 0.1
+
+      sobel_loss:
+        target: criteria.sobel_loss.SobelLoss
+        params:
+          weight: 1.0
+
+      # To make gaussians properties uniform
+      knn_reg:
+        target: criteria.gaussians_reg.KNNReg
+        params:
+          weight: 0.01
+
+      # To make unnecessary Gaussians disappear
+      opacity_reg:
+        target: criteria.gaussians_reg.OpacityReg
+        params:
+          weight: 0.001
+
+      segmentation_loss:
+        target: criteria.dice_loss.DiceLoss
+        params:
+          weight: 0.1
+
+      tv_loss:
+        target: criteria.tv_loss.TVLoss
+        params:
+          weight: 0.01
+
+train_dataloader:
+  batch_size: 4
+  num_workers: 4
+  target: dataloaders.smplx_loader.DataLoader
+  params:
+    use_hashing: False
+    render_size: 544
+    random_background: True
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual
+
+val_dataloader:
+  batch_size: 4
+  num_workers: 4
+  target: dataloaders.smplx_loader.DataLoader
+  params:
+    render_size: 544
+    white_background: True
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual-test
+
+test_dataloader:
+  batch_size: 1
+  num_workers: 4
+  target: dataloaders.smplx_loader.DataLoader
+  params:
+    render_size: 544
+    white_background: True
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual-test
+
+callbacks:
+  image_logger:
+    target: callbacks.image_logger.ImageLogger
+    params:
+      visualize_step: 100
+  animation_novel_poses:
+    target: callbacks.animation_logger.AnimationLogger
+    params:
+      animation_sequence: /mounted/home/dsvitov/Datasets/AMASS/CMU-SMPLX-N/61/61_15_stageii.npz
