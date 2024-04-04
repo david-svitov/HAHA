@@ -15,6 +15,12 @@ We present HAHA - a novel approach for animatable human avatar generation from m
 
 ## Installation
 
+### Clone the repository
+
+```commandline
+git clone --recursive https://github.com/david-svitov/HAHA.git
+```
+
 ### Environment
 
 The easiest way to build an environment for this repository is to use docker image. To build it, make the following steps:
