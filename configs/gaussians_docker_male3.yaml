@@ -87,7 +87,7 @@ train_dataloader:
     use_hashing: False
     render_size: 544
     random_background: True
-    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-4-casual
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual
 
 val_dataloader:
   batch_size: 4
@@ -96,7 +96,7 @@ val_dataloader:
   params:
     render_size: 544
     white_background: True
-    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-4-casual-test
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual-test
 
 test_dataloader:
   batch_size: 1
@@ -105,7 +105,7 @@ test_dataloader:
   params:
     render_size: 544
     white_background: True
-    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-4-casual-test
+    data_root: /mounted/home/dsvitov/Datasets/people_snapshot_smplx/male-3-casual-test
 
 callbacks:
   image_logger:
