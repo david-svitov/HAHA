@@ -153,9 +153,12 @@ python main.py --base=./configs/<config name>.yaml
 
 If you find this code useful for your research, please consider citing:
 ```bibtex
-@article{svitov2024haha,
-  title={Haha: Highly articulated gaussian human avatars with textured mesh prior},
-  author={Svitov, David and Morerio, Pietro and Agapito, Lourdes and Del Bue, Alessio},
-  journal={ACCV},
-  year={2024}
+@InProceedings{Svitov_2024_ACCV,
+    author    = {Svitov, David and Morerio, Pietro and Agapito, Lourdes and Del Bue, Alessio},
+    title     = {HAHA: Highly Articulated Gaussian Human Avatars with Textured Mesh Prior},
+    booktitle = {Proceedings of the Asian Conference on Computer Vision (ACCV)},
+    month     = {December},
+    year      = {2024},
+    pages     = {4051-4068}
 }
+```
